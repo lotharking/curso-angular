@@ -8,8 +8,10 @@ import { DestinoViaje } from './../models/destino-viaje.model';
 })
 export class ListaDestinosComponent implements OnInit {
   destinos: string[];
+  destinos1: string[];
   constructor() {
-  	this.destinos = [];
+  	this.destinos = [];//se deja vacio ya que se esta cargarndo con el formulario
+  	this.destinos = ["uno","dos","tres","cuatro"]
    }
 
   ngOnInit(): void {
