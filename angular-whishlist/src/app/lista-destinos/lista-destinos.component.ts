@@ -11,7 +11,7 @@ export class ListaDestinosComponent implements OnInit {
   destinos1: string[];
   constructor() {
   	this.destinos = [];//se deja vacio ya que se esta cargarndo con el formulario
-  	this.destinos = ["uno","dos","tres","cuatro"]
+  	this.destinos = ["uno","dos","tres","cuatro"];
    }
 
   ngOnInit(): void {
