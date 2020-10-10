@@ -7,17 +7,20 @@ import { DestinoViaje } from './../models/destino-viaje.model';
   styleUrls: ['./lista-destinos.component.css']
 })
 export class ListaDestinosComponent implements OnInit {
-  destinos: string[];
-  destinos1: string[];
+  destinos: DestinoViaje[];
   constructor() {
   	this.destinos = [];//se deja vacio ya que se esta cargarndo con el formulario
-  	this.destinos = ["uno","dos","tres","cuatro"];
    }
 
   ngOnInit(): void {
   }
- guardar(nombre, url): boolean{
+ guardar(nombre:string, url:string): boolean{
  	this.destinos.push(new DestinoViaje(nombre, url));
  	return false;
+ }
+
+ elegido(d: DestinoViaje) {
+   this.destinos.forEach(function (x){x.setSelected(false); });
+   d.setSelected(true);
  }
 }
