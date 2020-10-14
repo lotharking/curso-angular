@@ -29,7 +29,8 @@ export enum DestinosViajesActionTypes {
     ELEGIDO_FAVORITO = '[Destinos Viajes] Favorito',
     VOTE_UP = '[Destinos Viajes] Vote Up',
     VOTE_DOWN = '[Destinos Viajes] Vote Down',
-    REFRESH = '[Destinos Viajes] Refresh'
+    REFRESH = '[Destinos Viajes] Refresh',
+    INIT_MY_DATA = '[Destinos Viajes] Init My Data'
   }
   
   export class NuevoDestinoAction implements Action {
@@ -57,8 +58,13 @@ export enum DestinosViajesActionTypes {
     constructor(public destino: DestinoViaje) {}
   }
 
+  export class InitMyDataAction implements Action {
+    type = DestinosViajesActionTypes.INIT_MY_DATA;
+    constructor(public destinos: string[]) {}
+  }
+
   export type DestinosViajesActions = NuevoDestinoAction | ElegidoFavoritoAction
-  | VoteUpAction | VoteDownAction | RefreshAction; // Variable de todas las acciones sobre DestinosViajes
+  | VoteUpAction | VoteDownAction | RefreshAction | InitMyDataAction; // Variable de todas las acciones sobre DestinosViajes
 
   // REDUCERS -- Cada que se dispara una accion son llamados (con una accion y estado del sistema generan nuevo estado)
 export function reducerDestinosViajes(
@@ -66,6 +72,13 @@ export function reducerDestinosViajes(
     action: DestinosViajesActions
   ): DestinosViajesState {
     switch (action.type) {
+      case DestinosViajesActionTypes.INIT_MY_DATA: {
+        const destinos: string[]= (action as InitMyDataAction).destinos;
+        return {
+            ...state,
+            items: destinos.map((d) => new DestinoViaje(d, ''))
+          };
+        }
       case DestinosViajesActionTypes.NUEVO_DESTINO: {
         return {
             ...state,
