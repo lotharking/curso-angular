@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '../app.module';
+import { ElegidoFavoritoAction, NuevoDestinoAction } from '../models/destinos-viajes-state.model';
 import { DestinoViaje } from './../models/destino-viaje.model';
+import { DestinosApiClient } from './../models/destinos-api-client.model';
 
 @Component({
   selector: 'app-lista-destinos',
@@ -7,20 +11,33 @@ import { DestinoViaje } from './../models/destino-viaje.model';
   styleUrls: ['./lista-destinos.component.css']
 })
 export class ListaDestinosComponent implements OnInit {
-  destinos: DestinoViaje[];
-  constructor() {
-  	this.destinos = [];//se deja vacio ya que se esta cargarndo con el formulario
+  @Output() onItemAdded: EventEmitter<DestinoViaje>;
+  updates: string[] // agrega una linea cada que cambia el elegido como favorito
+  all;
+
+  constructor(public destinosApiClient: DestinosApiClient, private store: Store<AppState>) {
+    this.onItemAdded = new EventEmitter();
+    this.updates = [];
+    this.store.select(state => state.destinos.favorito)
+      .subscribe(d => {        
+        if (d != null){ // es diferente de null porque fue inicializado en null
+          this.updates.push('se ha elegido a ' + d.nombre);
+        }
+      });
+      store.select(state => state.destinos.items).subscribe(items => this.all = items);// Cada que cambia items, se los asigna a all
    }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
- guardar(nombre:string, url:string): boolean{
- 	this.destinos.push(new DestinoViaje(nombre, url));
- 	return false;
+  agregado(d: DestinoViaje) {
+   this.destinosApiClient.add(d);
+   this.onItemAdded.emit(d);
  }
 
- elegido(d: DestinoViaje) {
-   this.destinos.forEach(function (x){x.setSelected(false); });
-   d.setSelected(true);
+ elegido(e: DestinoViaje) {
+   this.destinosApiClient.elegir(e);
  }
+
+ getAll() {}
+
 }

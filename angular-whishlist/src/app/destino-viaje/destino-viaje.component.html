@@ -9,15 +9,22 @@
         <ul>
             <li *ngFor="let s of destino.servicios">
                 <span [ngSwitch]="s">
-                    <i *ngSwitchCase="'desayuno'" style="color: red;">{{s}}</i>
-                    <i *ngSwitchDefault>{{s}}</i>
+                    <i *ngSwitchCase="'desayuno'" style="color: red;">{{s}} *</i>
+                    <i *ngSwitchDefault>{{ s }}</i>
                 </span>
             </li>
         </ul>
+        <div>
+            <a href="#" (click)="voteUp()"><i class="material-icons md-18">thumb_up</i></a>
+            <a href="#" (click)="voteDown()"><i class="material-icons md-18">thumb_down</i></a>
+            {{ destino.votes }}
+            <a href="#" (click)="reset()"><i class="material-icons md-18">refresh</i></a>
+        </div>
         <a href="#" class="btn-card" (click)="ir()">Ir!</a>
         <span *ngIf="destino.isSelected()">
             <!-- ngNonBindable- ayuda a que no tome los{} como busqueda de variable -->
-            <span ngNonBindable>{{PREFERIDO}}</span>
-        </span>       
+            <span ngNonBindable> {{ PREFERIDO }} </span>
+        </span>
+        <a [routerLink]="['/destino', destino.id]">Ver!</a>
     </div>
 </div>
