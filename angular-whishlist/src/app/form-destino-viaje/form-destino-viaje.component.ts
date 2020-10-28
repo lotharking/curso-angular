@@ -29,7 +29,7 @@ export class FormDestinoViajeComponent implements OnInit {
 
     this.fg.valueChanges.subscribe((form: any) =>{
       console.log('cambio el formulario: ', form);
-    })//registrar un observable
+    })//registrar un observable(si hay cambio en el texto se activa)
   }
 
   ngOnInit(): void {
