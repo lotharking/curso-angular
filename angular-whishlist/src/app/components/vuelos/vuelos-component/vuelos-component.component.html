@@ -1,0 +1,10 @@
+<p>
+    vuelos works!
+</p>
+<div class="navLinks">
+    <a [routerLink]="['./main']">Main | </a>
+    <a [routerLink]="['./mas-info']">Mas info | </a>
+    <a [routerLink]="['./', 5]">Vuelo 5</a>
+</div>
+<!-- los routerLink seran cargadas por el router-outlet (por eso son relativas) -->
+<router-outlet></router-outlet>

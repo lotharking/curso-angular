@@ -15,6 +15,14 @@ export class DestinosApiClient {
 		this.store.dispatch(new NuevoDestinoAction(d));
 	}
 
+	getById(id: String): DestinoViaje {
+		return this.destinos.filter(function(d) { return d.id.toString() === id; })[0];
+	  }
+	
+	  getAll(): DestinoViaje[] {
+		return this.destinos;
+	  }
+
 	elegir(d: DestinoViaje) {
 		this.store.dispatch(new ElegidoFavoritoAction(d));
 	}	
