@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn } from '@angular/forms';
 import { DestinoViaje } from './../../models/destino-viaje.model';
 import { fromEvent } from 'rxjs';
 import { map, filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { ajax } from 'rxjs/ajax';
+import { ajax, AjaxResponse } from 'rxjs/ajax';
+import { AppConfig, APP_CONFIG } from 'src/app/app.module';
 
 @Component({
   selector: 'app-form-destino-viaje',
@@ -15,8 +16,8 @@ export class FormDestinoViajeComponent implements OnInit {
   fg: FormGroup;
   minLongitud = 3;
   searchResults: string[];
-
-  constructor(fb: FormBuilder) { 
+//funciona como una referencia circular con el module, debido a que ambos se retroalimentan para funcionar
+  constructor(fb: FormBuilder, @Inject(forwardRef(() => APP_CONFIG)) private config: AppConfig) { //forwardRef-ayuda a funcionar bien la referencia circular
     this.onItemAdded = new EventEmitter;
     this.fg = fb.group({
       nombre: ['', Validators.compose([
@@ -34,18 +35,14 @@ export class FormDestinoViajeComponent implements OnInit {
 
   ngOnInit(): void {
     let elemNombre = <HTMLInputElement>document.getElementById('nombre');
-    fromEvent(elemNombre, 'input')//fromEvent() genera un observable de eventos de teclado
+    fromEvent(elemNombre, 'input')//fromEvent genera un observable de eventos de teclado
       .pipe(//escucha cada vez que el ususario toca una tecla
         map((e: KeyboardEvent) => (e.target as HTMLInputElement).value),//cada que teclea una letra el revisa el valor
-        filter(text => text.length > 3),//longitud minima de dicha cadena
-        debounceTime(200),//revisa la cadena cada 200ms
+        filter(text => text.length > 2),//longitud minima de dicha cadena
+        debounceTime(120),//revisa la cadena cada 200ms
         distinctUntilChanged(),//no avanza en el dato hasta que llegue un valor diferente
-        switchMap(() => ajax('/assets/datos.json'))
-      ).subscribe(AjaxResponse => {
-        console.log(AjaxResponse.response);
-        this.searchResults = AjaxResponse.response;
-      });
-      
+        switchMap((text: string) => ajax(this.config.apiEndpoint + '/ciudades?q=' + text))//hacemos un ajax al apiEndpoint, mandandolo como consulta
+      ).subscribe(AjaxResponse => this.searchResults = AjaxResponse.response);//este es quien valida cada que se teclea segun el los datos.
   }
 
   guardar(nombre: string, url: string): boolean {

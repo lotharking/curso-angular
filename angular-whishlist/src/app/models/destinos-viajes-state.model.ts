@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DestinoViaje } from './destino-viaje.model';
 import { DestinosApiClient } from './destinos-api-client.model';
-import { HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpClientModule, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { REFRESH } from '@ngrx/store-devtools/src/actions';
 
 // ESTADO -- global de la aplicacion
@@ -15,9 +15,10 @@ export interface DestinosViajesState {
     favorito: DestinoViaje;
 }
 
-export const initializeDestinosViajesState = function() { // Manejo del estado
+// export const initializeDestinosViajesState = function() { // Son lo mismo
+export function initializeDestinosViajesState() { // Manejo del estado
   return {
-    items: [],
+    items: [],//InitMyDataAction esta vacio porque es un llamado asincronico, de ser sincronico estaria haciendo el llamado del metodo desde el module, pero como es asincronico, se hace la espera a que sea llamado por peticion
     loading: false,
     favorito: null
   };
