@@ -5,8 +5,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule as NgRxStoreModule, ActionReducerMap, Store } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { HttpClient, HttpClientModule, HttpHandler, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders, HttpRequest } from '@angular/common/http';
 import Dexie from 'dexie';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +27,8 @@ import { VuelosMasInfoComponentComponent } from './components/vuelos/vuelos-mas-
 import { VuelosDetalleComponentComponent } from './components/vuelos/vuelos-detalle-component/vuelos-detalle-component.component';
 import { ReservasModule } from './reservas/reservas.module';
 import { DestinoViaje } from './models/destino-viaje.model';
+import { from, Observable } from 'rxjs';
+import { flatMap, map } from 'rxjs/operators';
 
 // app config- para inyeccion de dependencias
 export interface AppConfig{
@@ -100,21 +103,65 @@ class AppLoadService {//al inicializar trae toda la lista del servidor de posibl
 //fin app init
 
 // dexie db
+export class Translation {
+  constructor(public id: number, public lang: string, public key: string, public value: string) {}
+}
+
 @Injectable({
   providedIn: "root"
 })
 export class MyDatabase extends Dexie {
   destinos: Dexie.Table<DestinoViaje, number>;
-  constructor () {
+  translations: Dexie.Table<Translation, number>;
+  constructor () {// el fin de manejar versionado en la db es que si hay almacenado cosas en versiones anteriores y se cambia, se pueda adaptar al nuevo funcionamiento
     super('MyDatabase');
     this.version(1).stores({
+      destinos: '++id, nombre, imagenUrl'
+    });
+    this.version(2).stores({
       destinos: '++id, nombre, imagenUrl',
+      translations: '++id, lang, key, value'
     });
   }
 }
-
 export const db = new MyDatabase();
 // fin dexie db
+
+// i18n init
+class TranslationLoader implements TranslateLoader { // cargador personalizado de traducciones
+  constructor(private http: HttpClient) {}
+
+  getTranslation(lang: string): Observable<any>{ // cada que pide una traduccion llega a este metodo recibiendo el lenguaje devolviendo un observable
+    const promise = db.translations
+                      .where('lang')
+                      .equals(lang)
+                      .toArray() // devuelve una promesa si es igual y por eso se vincula un callback
+                      .then(results => {
+                                        if (results.length === 0) {//si es 0 es porue no esta en db y la almacena
+                                          return this.http
+                                            .get<Translation[]>(APP_CONFIG_VALUE.apiEndpoint + '/api/translation?lang=' + lang)
+                                            .toPromise()
+                                            .then(apiResults => {
+                                              db.translations.bulkAdd(apiResults);
+                                              return apiResults;
+                                            });
+                                        }
+                                        return results;
+                                      }).then((traducciones) => { // realiza las traducciones
+                                        console.log('traducciones cargadas:');
+                                        console.log(traducciones);
+                                        return traducciones;
+                                      }).then((traducciones) => {
+                                        return traducciones.map((t) => ({ [t.key]: t.value})); // se realiza debido a que el espera valor en formato json solamente
+                                      });
+    return from(promise).pipe(flatMap((elems) => from(elems)));// se realiza para apsar de promesa a observable que es lo que espera
+  }// para ello tambien se emplea el flatmap, el cual convierte un array de arrays en un array de traducciones
+}
+
+function HttpLoaderFactory(http: HttpClient){
+  return new TranslationLoader(http);
+}
+// fin i18n
 
 @NgModule({
   declarations: [
@@ -146,7 +193,14 @@ export const db = new MyDatabase();
      }),
     EffectsModule.forRoot([ DestinosViajesEffects ]),
     StoreDevtoolsModule.instrument(),
-    ReservasModule
+    ReservasModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (HttpLoaderFactory),
+        deps: [HttpClient]
+    }
+    })
   ],
   providers: [
     AuthService, UsuarioLogueadoGuard,

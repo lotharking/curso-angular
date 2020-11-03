@@ -15,3 +15,7 @@ app.post("/my", (req, res, next) => {
     misDestinos.push(req.body.nuevo);
     res.json(misDestinos);
 });
+// un get sobre traducciones, el cual devuelve el lenguaje 
+app.get("/api/translation", (req, res, next) => res.json([
+    { lang: req.query.lang, key: 'HOLA', value: 'HOLA ' + req.query.lang }//lang: (siglas idioma), key: hola en el idoma que corresponda, value: traduccion
+]));
