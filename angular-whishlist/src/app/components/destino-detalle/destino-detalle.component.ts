@@ -1,8 +1,9 @@
-import { Component, OnInit, InjectionToken, Inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, InjectionToken, Inject, Injectable, forwardRef } from '@angular/core';
 import { inject } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.module';
+import { AppConfig, AppState, APP_CONFIG } from 'src/app/app.module';
 import { DestinoViaje } from '../../models/destino-viaje.model';
 import { DestinosApiClient } from '../../models/destinos-api-client.model';
 
@@ -29,9 +30,12 @@ class DestinosApiClientViejo { // para usar el useExisting tienen que tener func
 @Injectable()
 class DestinosApiClientDecorated extends DestinosApiClient {//se herada el destinoapiclient
   // constructor(@Inject(APP_CONFIG) private config: AppConfig, store: Store<AppState>) { //ya hay un store provate que viene heredado, pero si se pasa la variable
-  constructor(store: Store<AppState>) { //ya hay un store provate que viene heredado, pero si se pasa la variable
-    // super();
-    super(store);
+  constructor(store: Store<AppState>,
+		@Inject(forwardRef(() => APP_CONFIG)) config: AppConfig,
+    http: HttpClient
+    ) { //ya hay un store provate que viene heredado, pero si se pasa la variable
+    super(store, config, http);
+    // super(store);
   }
   getById(id: string): DestinoViaje {
     console.log('llamando por la clase decorada!');
