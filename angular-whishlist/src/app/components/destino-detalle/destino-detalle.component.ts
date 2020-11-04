@@ -7,12 +7,12 @@ import { DestinoViaje } from '../../models/destino-viaje.model';
 import { DestinosApiClient } from '../../models/destinos-api-client.model';
 
 //inicio caso
-// class DestinosApiClientViejo { // para usar el useExisting tienen que tener funciones compatibles como el getById
-//   getById(id: String): DestinoViaje {
-//     console.log('llamando la vieja clase');
-//     return null;
-//   }
-// }
+class DestinosApiClientViejo { // para usar el useExisting tienen que tener funciones compatibles como el getById
+  getById(id: String): DestinoViaje {
+    console.log('llamando la vieja clase');
+    return null;
+  }
+}
 // //solicitud de loggear cada vez que se llama el getById
 // //se crea este metodo debido a que se crea la variable config y se desea asignarle un valor puntual
 // //InjectionToken- ayuda a injectar el valor especifico, el new asigna cualquier valor
@@ -50,13 +50,13 @@ import { DestinosApiClient } from '../../models/destinos-api-client.model';
     // { provide: DestinosApiClientViejo, useExisting: DestinosApiClient } //el viejo usa api client
     
     // DestinosApiClient,
-    // { provide: DestinosApiClientViejo, useExisting: DestinosApiClient } 
+    { provide: DestinosApiClientViejo, useExisting: DestinosApiClient } 
    ] 
 })
 export class DestinoDetalleComponent implements OnInit {
   destino: DestinoViaje;
 
-  constructor(private route: ActivatedRoute, private destinosApiClient: DestinosApiClient) {}
+  constructor(private route: ActivatedRoute, private destinosApiClient: DestinosApiClientViejo) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
