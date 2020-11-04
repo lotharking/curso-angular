@@ -13,9 +13,9 @@ class DestinosApiClientViejo { // para usar el useExisting tienen que tener func
     return null;
   }
 }
-// //solicitud de loggear cada vez que se llama el getById
-// //se crea este metodo debido a que se crea la variable config y se desea asignarle un valor puntual
-// //InjectionToken- ayuda a injectar el valor especifico, el new asigna cualquier valor
+//solicitud de loggear cada vez que se llama el getById
+//se crea este metodo debido a que se crea la variable config y se desea asignarle un valor puntual
+//InjectionToken- ayuda a injectar el valor especifico, el new asigna cualquier valor
 // interface AppConfig {
 //   apiEndpoint: string;
 // }
@@ -26,17 +26,19 @@ class DestinosApiClientViejo { // para usar el useExisting tienen que tener func
 
 // const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
 
-// @Injectable()
-// class DestinosApiClientDecorated extends DestinosApiClient {//se herada el destinoapiclient
-//   constructor(@Inject(APP_CONFIG) private config: AppConfig, store: Store<AppState>) { //ya hay un store provate que viene heredado, pero si se pasa la variable
-//     super(store);
-//   }
-//   getById(id: string): DestinoViaje {
-//     console.log('llamando por la clase decorada!');
-//     console.log('config: ' + this.config.apiEndpoint);
-//     return super.getById(id);
-//   }
-// }
+@Injectable()
+class DestinosApiClientDecorated extends DestinosApiClient {//se herada el destinoapiclient
+  // constructor(@Inject(APP_CONFIG) private config: AppConfig, store: Store<AppState>) { //ya hay un store provate que viene heredado, pero si se pasa la variable
+  constructor(store: Store<AppState>) { //ya hay un store provate que viene heredado, pero si se pasa la variable
+    // super();
+    super(store);
+  }
+  getById(id: string): DestinoViaje {
+    console.log('llamando por la clase decorada!');
+    // console.log('config: ' + this.config.apiEndpoint);
+    return super.getById(id);
+  }
+}
 //fin caso(tener en cuenta providers)
 
 @Component({
@@ -44,13 +46,13 @@ class DestinosApiClientViejo { // para usar el useExisting tienen que tener func
   templateUrl: './destino-detalle.component.html',
   styleUrls: ['./destino-detalle.component.css'],
   providers: [ //anula el comportamiento del providers en el module.ts general
-    DestinosApiClient
+    // DestinosApiClient
     // { provide: APP_CONFIG, useValue: APP_CONFIG_VALUE },//el decorated usa el appconfig
-    // { provide: DestinosApiClient, useClass: DestinosApiClientDecorated },//el apli client usa el decorado
-    // { provide: DestinosApiClientViejo, useExisting: DestinosApiClient } //el viejo usa api client
+    { provide: DestinosApiClient, useClass: DestinosApiClientDecorated },//el apli client usa el decorado
+    { provide: DestinosApiClientViejo, useExisting: DestinosApiClient } //el viejo usa api client
     
     // DestinosApiClient,
-    { provide: DestinosApiClientViejo, useExisting: DestinosApiClient } 
+    // { provide: DestinosApiClientViejo, useExisting: DestinosApiClient } 
    ] 
 })
 export class DestinoDetalleComponent implements OnInit {
