@@ -15,17 +15,8 @@ class DestinosApiClientViejo { // para usar el useExisting tienen que tener func
   }
 }
 //solicitud de loggear cada vez que se llama el getById
-//se crea este metodo debido a que se crea la variable config y se desea asignarle un valor puntual
+//se crea este metodo(APP_CONFIG- ya eliminado por encontrarse en module.ts) debido a que se crea la variable config y se desea asignarle un valor puntual
 //InjectionToken- ayuda a injectar el valor especifico, el new asigna cualquier valor
-// interface AppConfig {
-//   apiEndpoint: string;
-// }
-
-// const APP_CONFIG_VALUE: AppConfig = {
-//   apiEndpoint: 'mi_api.com'
-// };
-
-// const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
 
 @Injectable()
 class DestinosApiClientDecorated extends DestinosApiClient {//se herada el destinoapiclient
@@ -33,13 +24,12 @@ class DestinosApiClientDecorated extends DestinosApiClient {//se herada el desti
   constructor(store: Store<AppState>,
 		@Inject(forwardRef(() => APP_CONFIG)) config: AppConfig,
     http: HttpClient
-    ) { //ya hay un store provate que viene heredado, pero si se pasa la variable
+    ) { //ya hay un store private que viene heredado, pero si se pasa la variable
     super(store, config, http);
     // super(store);
   }
   getById(id: string): DestinoViaje {
     console.log('llamando por la clase decorada!');
-    // console.log('config: ' + this.config.apiEndpoint);
     return super.getById(id);
   }
 }
@@ -50,13 +40,9 @@ class DestinosApiClientDecorated extends DestinosApiClient {//se herada el desti
   templateUrl: './destino-detalle.component.html',
   styleUrls: ['./destino-detalle.component.css'],
   providers: [ //anula el comportamiento del providers en el module.ts general
-    // DestinosApiClient
-    // { provide: APP_CONFIG, useValue: APP_CONFIG_VALUE },//el decorated usa el appconfig
     { provide: DestinosApiClient, useClass: DestinosApiClientDecorated },//el apli client usa el decorado
     { provide: DestinosApiClientViejo, useExisting: DestinosApiClient } //el viejo usa api client
     
-    // DestinosApiClient,
-    // { provide: DestinosApiClientViejo, useExisting: DestinosApiClient } 
    ] 
 })
 export class DestinoDetalleComponent implements OnInit {
