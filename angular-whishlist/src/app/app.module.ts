@@ -8,6 +8,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClient, HttpClientModule, HttpHeaders, HttpRequest } from '@angular/common/http';
 import Dexie from 'dexie';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -200,7 +202,9 @@ function HttpLoaderFactory(http: HttpClient){
         useFactory: (HttpLoaderFactory),
         deps: [HttpClient]
     }
-    })
+    }),
+    NgxMapboxGLModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AuthService, UsuarioLogueadoGuard,

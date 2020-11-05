@@ -3,11 +3,28 @@ import { DestinoViaje } from './../../models/destino-viaje.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.module';
 import { VoteUpAction, VoteDownAction, RefreshAction } from '../../models/destinos-viajes-state.model';
+import { trigger, state, style, transition, animate } from '@angular/animations';//trigger-maneja nombre de las animaciones
 
 @Component({
   selector: 'app-destino-viaje',
   templateUrl: './destino-viaje.component.html',
-  styleUrls: ['./destino-viaje.component.css']
+  styleUrls: ['./destino-viaje.component.css'],
+  animations: [ // array de triggers
+    trigger('esFavorito', [ // animacion--[@esFavorito](html) se le debe asignar un valor y es indicativo trigger en html
+      state('estadoFavorito', style({ // estado 1
+        backgroundColor: 'PaleTurquoise'
+      })),
+      state('estadoNoFavorito', style({ // estado 2
+        backgroundColor: 'WhiteSmoke'
+      })),
+      transition('estadoNoFavorito => estadoFavorito', [ // transicion entre estados
+        animate('3s') // delay
+      ]),
+      transition('estadoFavorito => estadoNoFavorito', [
+        animate('1s')
+      ]),
+    ]
+  )]
 })
 export class DestinoViajeComponent implements OnInit {
 	@Input() destino: DestinoViaje;//nombre puede ser pasado como parametro a las plantillas del componente

@@ -41,12 +41,29 @@ class DestinosApiClientDecorated extends DestinosApiClient {//se herada el desti
   styleUrls: ['./destino-detalle.component.css'],
   providers: [ //anula el comportamiento del providers en el module.ts general
     { provide: DestinosApiClient, useClass: DestinosApiClientDecorated },//el apli client usa el decorado
-    { provide: DestinosApiClientViejo, useExisting: DestinosApiClient } //el viejo usa api client
-    
+    { provide: DestinosApiClientViejo, useExisting: DestinosApiClient } //el viejo usa api client    
    ] 
 })
 export class DestinoDetalleComponent implements OnInit {
   destino: DestinoViaje;
+  style = {
+    sources: { // al usar source que no es de mapbox se ahorra poner un token de seguridad creando cuenta de mapbox
+      world: {
+        type: 'geojson',
+        data: 'https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json'
+      },
+    },
+    version: 8,
+    layers: [{
+      'id': 'countries',
+      'type': 'fill',
+      'source': 'world',
+      'layout': {},
+      'paint': {
+        'fill-color': '#6F788A'
+      },
+    }],
+  };
 
   constructor(private route: ActivatedRoute, private destinosApiClient: DestinosApiClientViejo) {}
 
