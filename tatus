@@ -1,0 +1,125 @@
+[33mcommit bee3d2d1552b3954f4437f112a44655559e3764a[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Thu Nov 5 18:58:20 2020 -0500
+
+    trabajando con mapas
+
+[33mcommit a39cdf85e30b30476c2d428b2ff734d36d00179f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Wed Nov 4 19:32:00 2020 -0500
+
+    Correcciones
+
+[33mcommit 9cde394d7a221a315ea36796179f8fa1529dc83f[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Wed Nov 4 14:28:44 2020 -0500
+
+    correccion errores
+
+[33mcommit a6d51b70536be7d58b7b3473fdac70b6eb88cce7[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Wed Nov 4 14:01:53 2020 -0500
+
+    Se agrego useClass
+
+[33mcommit 392a28c39da335ff1129da240cbf4e2cf7832d20[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Wed Nov 4 12:58:51 2020 -0500
+
+    agregando useExisting
+
+[33mcommit 3c0a87421edc6dc7c2ccc8af0887059e609c3d5d[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Tue Nov 3 17:54:43 2020 -0500
+
+    trabajando con idiomas
+
+[33mcommit 3659e747e3bcaa936792832735009da5df1cfc2a[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Tue Nov 3 14:08:26 2020 -0500
+
+    Trabajando con db dexie
+
+[33mcommit 372bfd747ec2329f9059831c02d270522768d9a4[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Thu Oct 29 16:58:08 2020 -0500
+
+    inyeccion de dependencias
+
+[33mcommit 6bb185e932ac1eb507e48db1044234c7b0653d8a[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Wed Oct 28 13:14:01 2020 -0500
+
+    se trabajo con rutas hijas
+
+[33mcommit 598327db5f8602bee44ec742475e9be1d72d08e8[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Wed Oct 28 11:11:33 2020 -0500
+
+    se actualizo comentarios
+
+[33mcommit 845f0a685c6b60b0d62b6a2e4a76264a0d18a58b[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Wed Oct 14 16:52:41 2020 -0500
+
+    ultima copia de seguridad
+
+[33mcommit ec277ac3a1b96ffffc54e13745e4c4173319eb01[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Wed Oct 14 12:49:31 2020 -0500
+
+    se agrego funcion borrar
+
+[33mcommit 6db42d6dd28d9cd4de80a746d8c9efdbb5267ef5[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Wed Oct 14 11:57:52 2020 -0500
+
+    Se trabajo con redux
+
+[33mcommit 10677709a7860dec994a7559492f5d8b539db9e3[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Fri Oct 9 20:04:42 2020 -0500
+
+    se trabajo con ngfor ngcase and ngif
+
+[33mcommit d21c606136b0ee42290bace6a096a7d224e43d82[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Thu Oct 8 18:03:23 2020 -0500
+
+    correccion vector
+
+[33mcommit a300e53e7cdf6cf6e8a912372617f2638fcc1807[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Thu Oct 8 17:41:04 2020 -0500
+
+    agregar vector tarea
+
+[33mcommit 8835659be2244f1837bad00eb53141e527917659[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Thu Oct 8 17:18:42 2020 -0500
+
+    Se creo un formulario con angular
+
+[33mcommit 1bb91f7712301bdff8328decde4457cdff7b94c1[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Tue Oct 6 19:20:12 2020 -0500
+
+    trabajando con serve
+
+[33mcommit be3d57a17a381361f6f72ac8b6793fa32845d1b9[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Tue Oct 6 18:26:19 2020 -0500
+
+    creacion hola mundo con angular
+
+[33mcommit 334a3e2a9c729714696021b8607b98f910dc0128[m
+Author: Andres Vallecilla <andresfelipe083195@gmail.com>
+Date:   Tue Oct 6 18:05:16 2020 -0500
+
+    cambio en el readme
+
+[33mcommit d846999527b201f520eb565dd59b8496ba435354[m
+Author: andresfv95 <44345360+lotharking@users.noreply.github.com>
+Date:   Tue Oct 6 17:43:20 2020 -0500
+
+    Create README.md
