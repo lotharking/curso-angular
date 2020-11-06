@@ -9,7 +9,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   selector: 'app-destino-viaje',
   templateUrl: './destino-viaje.component.html',
   styleUrls: ['./destino-viaje.component.css'],
-  animations: [ // array de triggers
+  animations: [ // array de trigger
     trigger('esFavorito', [ // animacion--[@esFavorito](html) se le debe asignar un valor y es indicativo trigger en html
       state('estadoFavorito', style({ // estado 1
         backgroundColor: 'PaleTurquoise'
