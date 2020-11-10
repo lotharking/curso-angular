@@ -2,7 +2,7 @@ import { Component, OnInit, Input, HostBinding, EventEmitter, Output } from '@an
 import { DestinoViaje } from './../../models/destino-viaje.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.module';
-import { VoteUpAction, VoteDownAction, RefreshAction } from '../../models/destinos-viajes-state.model';
+import { VoteUpAction, VoteDownAction, RefreshAction, TrackingTagsAction } from '../../models/destinos-viajes-state.model';
 import { trigger, state, style, transition, animate } from '@angular/animations';//trigger-maneja nombre de las animaciones
 
 @Component({
@@ -58,5 +58,4 @@ export class DestinoViajeComponent implements OnInit {
     this.store.dispatch( new RefreshAction(this.destino));
     return false;    
   }
-
 }

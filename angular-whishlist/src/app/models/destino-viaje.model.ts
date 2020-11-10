@@ -1,4 +1,3 @@
-import { ObjectUnsubscribedError } from 'rxjs';
 import {v4 as uuid} from 'uuid';
 
 export class DestinoViaje {

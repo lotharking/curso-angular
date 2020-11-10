@@ -13,6 +13,7 @@ export interface DestinosViajesState {
     items: DestinoViaje[];
     loading: boolean; 
     favorito: DestinoViaje;
+    increment: number;
 }
 
 // export const initializeDestinosViajesState = function() { // Son lo mismo
@@ -20,7 +21,8 @@ export function initializeDestinosViajesState() { // Manejo del estado
   return {
     items: [],//InitMyDataAction esta vacio porque es un llamado asincronico, de ser sincronico estaria haciendo el llamado del metodo desde el module, pero como es asincronico, se hace la espera a que sea llamado por peticion
     loading: false,
-    favorito: null
+    favorito: null,
+    increment: 0
   };
 };
 
@@ -31,7 +33,8 @@ export enum DestinosViajesActionTypes {
     VOTE_UP = '[Destinos Viajes] Vote Up',
     VOTE_DOWN = '[Destinos Viajes] Vote Down',
     REFRESH = '[Destinos Viajes] Refresh',
-    INIT_MY_DATA = '[Destinos Viajes] Init My Data'
+    INIT_MY_DATA = '[Destinos Viajes] Init My Data',
+    TRACKINGTAGS = '[Number] trackingTags'
   }
   
   export class NuevoDestinoAction implements Action {
@@ -64,9 +67,15 @@ export enum DestinosViajesActionTypes {
     constructor(public destinos: string[]) {}
   }
 
-  export type DestinosViajesActions = NuevoDestinoAction | ElegidoFavoritoAction
-  | VoteUpAction | VoteDownAction | RefreshAction | InitMyDataAction; // Variable de todas las acciones sobre DestinosViajes
+  export class TrackingTagsAction implements Action {
+    type = DestinosViajesActionTypes.TRACKINGTAGS;
+    constructor() {}
+  }
 
+  export type DestinosViajesActions = NuevoDestinoAction | ElegidoFavoritoAction
+  | VoteUpAction | VoteDownAction | RefreshAction | InitMyDataAction | TrackingTagsAction; // Variable de todas las acciones sobre DestinosViajes
+
+  let contador = 0;
   // REDUCERS -- Cada que se dispara una accion son llamados (con una accion y estado del sistema generan nuevo estado)
 export function reducerDestinosViajes(
     state: DestinosViajesState,
@@ -109,6 +118,11 @@ export function reducerDestinosViajes(
         const d: DestinoViaje = (action as RefreshAction).destino;
         d.refresh();
         return { ...state };
+    }
+      case DestinosViajesActionTypes.TRACKINGTAGS: {
+        const d = (action as TrackingTagsAction);
+        contador++;
+        return { ...state, increment: contador };
     }
   }
   return state; 
