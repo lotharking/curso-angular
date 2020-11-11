@@ -24,8 +24,13 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: true,
-    browsers: ['Chrome'],
+    autoWatch: false, // depende de la prueba, se deja en false en circleci para que solo lo ejecute una unica vez pero en jazmine si debe ser true para estar leyendo cambios
+    browsers: ['Chrome', 'ChromeHeadless', 'ChromeHeadlessCI'],
+    customLaunchers: {
+      ChromeHeadlessCI: { // corra un test bajo el navegador chrome
+        base: 'ChromeHeadless', // headless -- no abre la ventana grafica, evita errores por librerias de graficos
+        flags: ['--no-sandbox', '--disable-gpu', '--disable-translate', '--disable-extensions', '--remote-debugging-port=9223']
+      }},
     singleRun: false,
     restartOnFileChange: true
   });
