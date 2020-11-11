@@ -75,7 +75,9 @@ export enum DestinosViajesActionTypes {
   export type DestinosViajesActions = NuevoDestinoAction | ElegidoFavoritoAction
   | VoteUpAction | VoteDownAction | RefreshAction | InitMyDataAction | TrackingTagsAction; // Variable de todas las acciones sobre DestinosViajes
 
+  //variable usada en el reducer
   let contador = 0;
+  
   // REDUCERS -- Cada que se dispara una accion son llamados (con una accion y estado del sistema generan nuevo estado)
 export function reducerDestinosViajes(
     state: DestinosViajesState,
